@@ -1,0 +1,87 @@
+.navbar .logo {
+    height: 65px;
+    width: auto;
+}
+
+.navbar {
+    background-color: #0044ffce;
+    /* Cambia a cualquier color */
+}
+
+.navbar .navbar-brand {
+    display: flex;
+    align-items: center;
+}
+
+button {
+    border-radius: 4px;
+    border: unset;
+    padding: 15px 30px;
+    font-size: larger;
+
+}
+
+
+button {
+    background-color: #186DF0;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.navbar .dropdown-menu {
+    background-color: #0d6efd;
+    border: none;
+}
+
+.navbar .dropdown-menu .dropdown-item {
+    color: white;
+}
+
+.navbar .dropdown-menu .dropdown-item:hover {
+    background-color: #0b5ed7;
+    color: white;
+}
+
+.navbar .nav-link.dropdown-toggle {
+    font-size: 1.5rem;
+}
+
+.banner {
+    background: linear-gradient(90deg, #00b7ff, #1866ff);
+    color: white;
+    text-align: left;
+    font-size: 2.85rem;
+    font-weight: bold;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+    width: 100%;
+    max-width: 1900px;
+    height: 250px;
+    margin: 1rem auto;
+
+
+    display: flex;
+    align-items: center;
+    padding-left: 1.5rem;
+}
+
+.banner-img {
+    float: right;
+    height: 230px;
+    width: auto;
+    margin-left: 550px;
+}
+
+
+.carousel-item {
+    height: 700px;
+    /* Ajusta la altura del carousel */
+}
+
+.carousel-item img {
+    height: 100%;
+    width: 100%;
+}

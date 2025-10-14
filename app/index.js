@@ -3,7 +3,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 import { method as authentication } from "./controllers/authentication.controllers.js";
-
+import cookieParser from "cookie-parser";
 
 
 // Crear servidor
@@ -13,7 +13,7 @@ app.set("port", 4000);
 //configuracion
 app.use(express.static(__dirname + "/public"))
 app.use(express.json());
-
+app.use(cookieParser());
 
 //rutas
 app.get("/", (req, res) => {
@@ -22,8 +22,12 @@ app.get("/", (req, res) => {
 app.get("/registrar", (req, res) => {
     res.sendFile(path.join(__dirname, "pages", "registrar.html"));
 });
-app.get("/menu", (req, res) => {
+app.get("/menu", authentication.verificarToken, (req, res) => {
     res.sendFile(path.join(__dirname, "pages", "menu.html"));
+});
+app.get("/logout", (req, res) => {
+    res.clearCookie("jwt"); 
+    res.redirect("/"); 
 });
 
 
