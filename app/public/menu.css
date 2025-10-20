@@ -1,11 +1,15 @@
-.navbar .logo {
+.navbar {
     height: 65px;
+    width: auto;
+}
+
+.logo {
+    height: 45px;
     width: auto;
 }
 
 .navbar {
     background-color: #0044ffce;
-    /* Cambia a cualquier color */
 }
 
 .navbar .navbar-brand {
@@ -45,7 +49,7 @@ button {
 }
 
 .navbar .nav-link.dropdown-toggle {
-    font-size: 1.5rem;
+    font-size: 1.1rem;
 }
 
 .banner {
@@ -58,7 +62,7 @@ button {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 
     width: 100%;
-    max-width: 1900px;
+    max-width: 1800px;
     height: 250px;
     margin: 1rem auto;
 
@@ -75,13 +79,35 @@ button {
     margin-left: 550px;
 }
 
-
-.carousel-item {
-    height: 700px;
-    /* Ajusta la altura del carousel */
+section {
+    border-radius: 15px;
+    padding: 40px;
+    margin-bottom: 40px;
+    background-color: var(--bs-secondary-bg);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
 }
 
-.carousel-item img {
-    height: 100%;
-    width: 100%;
+section .texto {
+    flex: 1;
+    text-align: justify; 
+}
+
+section .img-derecha {
+    width: 350px;  
+    height: auto;
+    border-radius: 10px; 
+}
+
+
+footer {
+    background-color: var(--bs-body-bg);
+    text-align: center;
+    padding: 20px;
+    border-top: 1px solid var(--bs-border-color);
 }

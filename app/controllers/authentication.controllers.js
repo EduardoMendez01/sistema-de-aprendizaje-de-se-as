@@ -96,9 +96,31 @@ function verificarToken(req, res, next) {
     }
 }
 
+async function obtenerProgreso(req, res) {
+    try {
+        const usuario = req.user;
+
+        const [progreso] = await connection.query(`
+            SELECT f.*, 
+                   IFNULL(pu.completada, 0) AS completada
+            FROM fases f
+            LEFT JOIN progreso_usuarios pu
+            ON pu.fase_id = f.id AND pu.usuario_id = ?
+            ORDER BY f.orden ASC
+        `, [usuario.id]);
+
+        res.json(progreso);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Error al obtener progreso" });
+    }
+}
+
 export const method = {
     login,
     registrar,
-    verificarToken
+    verificarToken,
+    obtenerProgreso
+
 };
 

@@ -25,6 +25,11 @@ app.get("/registrar", (req, res) => {
 app.get("/menu", authentication.verificarToken, (req, res) => {
     res.sendFile(path.join(__dirname, "pages", "menu.html"));
 });
+app.get("/cursos", authentication.verificarToken, (req, res) => {
+    res.sendFile(path.join(__dirname, "pages", "cursos.html"));
+});
+
+
 app.get("/logout", (req, res) => {
     res.clearCookie("jwt"); 
     res.redirect("/"); 
@@ -34,6 +39,7 @@ app.get("/logout", (req, res) => {
 //rutas api
 app.post("/api/login", authentication.login);
 app.post("/api/registrar", authentication.registrar);
+app.get("/api/progreso", authentication.verificarToken, authentication.obtenerProgreso);
 
 
 // Iniciar servidor
