@@ -45,9 +45,13 @@
         </div>
     </nav>
 
-    <main>
+    <main class="container mt-5">
+        <h2 class="text-center mb-4">Fases de aprendizaje</h2>
 
-
+        <!-- Contenedor donde se mostrarán las fases -->
+        <div id="lista-fases" class="d-flex flex-wrap justify-content-center gap-3">
+            <!-- Las fases se insertarán aquí desde cursos.js -->
+        </div>
     </main>
 
 
@@ -88,6 +92,32 @@
                 })
             })
         })()
+    </script>
+
+    <script>
+            (() => {
+                const storedTheme = localStorage.getItem('theme');
+                const getPreferredTheme = () =>
+                    storedTheme ? storedTheme : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+
+                const setTheme = theme => document.documentElement.setAttribute('data-bs-theme', theme);
+                setTheme(getPreferredTheme());
+
+                window.addEventListener('DOMContentLoaded', () => {
+                    document.querySelectorAll('[data-bs-theme-value]').forEach(btn => {
+                        btn.addEventListener('click', () => {
+                            const theme = btn.getAttribute('data-bs-theme-value');
+                            localStorage.setItem('theme', theme);
+                            setTheme(theme);
+                        });
+                    });
+
+                    // Logout
+                    document.getElementById("logoutBtn").addEventListener("click", () => {
+                        window.location.href = "/logout";
+                    });
+                });
+            })();
     </script>
 </body>
 
