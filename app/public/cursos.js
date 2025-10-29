@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const main = document.querySelector("main");
 
     try {
-        const res = await fetch("http://localhost:4000/api/fases?usuario_id=1");
+        const res = await fetch("http://localhost:4000/api/fases");
         const fases = await res.json();
 
         // Estructura base
