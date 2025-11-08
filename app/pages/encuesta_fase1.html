@@ -146,26 +146,57 @@
                 <input type="radio" name="preg3" value="A"> A<br>
             </div>
 
+            <div class="mb-4">
+                <label><strong>4. ¿Qué letra se forma uniendo los dedos medio, anular, meñique y pulgar, dejando el
+                        índice extendido?</strong></label><br>
+                <input type="radio" name="preg4" value="D"> D<br>
+                <input type="radio" name="preg4" value="B"> B<br>
+                <input type="radio" name="preg4" value="C"> C<br>
+            </div>
+
+            <div class="mb-4">
+                <label><strong>5. ¿Qué letra se representa con los dedos extendidos y el pulgar doblado hacia la
+                        palma?</strong></label><br>
+                <input type="radio" name="preg5" value="B"> B<br>
+                <input type="radio" name="preg5" value="A"> A<br>
+                <input type="radio" name="preg5" value="F"> F<br>
+            </div>
+
+            <div class="mb-4">
+                <label><strong>6. ¿Qué letra se forma doblando el dedo índice hasta tocar la yema del
+                        pulgar?</strong></label><br>
+                <input type="radio" name="preg6" value="F"> F<br>
+                <input type="radio" name="preg6" value="E"> E<br>
+                <input type="radio" name="preg6" value="D"> D<br>
+            </div>
+
             <button type="submit">Enviar respuestas</button>
         </form>
 
         <div id="resultado" class="resultado"></div>
+
+
+        <div id="resultado" class="resultado"></div>
     </div>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
-        
+
         document.getElementById("formEncuesta").addEventListener("submit", function (e) {
             e.preventDefault();
 
             const respuestasCorrectas = {
                 preg1: "A",
                 preg2: "E",
-                preg3: "C"
+                preg3: "C",
+                preg4: "D",
+                preg5: "B",
+                preg6: "F"
             };
 
+            let total = 6;
+
             let puntos = 0;
-            let total = 3;
 
             for (let key in respuestasCorrectas) {
                 const seleccionada = document.querySelector(`input[name="${key}"]:checked`);
@@ -190,7 +221,7 @@
             }
 
             this.querySelectorAll("input, button").forEach(el => el.disabled = true);
-                enviarResultado(porcentaje);
+            enviarResultado(porcentaje);
 
         });
 
@@ -201,7 +232,7 @@
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    faseId: 1, 
+                    faseId: 1,
                     resultado: resultado
                 })
             })
@@ -214,7 +245,7 @@
                             icon: "success",
                             confirmButtonText: "Continuar"
                         }).then(() => {
-                            window.location.href = "/encuesta_fase1.html"; 
+                            window.location.href = "/encuesta_fase1.html";
                         });
                     } else {
                         Swal.fire("Error", "No se pudo guardar tu progreso", "error");
