@@ -31,21 +31,54 @@ document.addEventListener("DOMContentLoaded", async () => {
                         <p class="card-text">
                             ${fase.completada ? "✅ Completada" : "⏳ Pendiente"}
                         </p>
-                        <button class="btn btn-primary" ${fase.completada ? "disabled" : ""}>
-                            ${fase.completada ? "Completada" : "Iniciar"}
-                        </button>
+                        <div class="d-flex justify-content-center gap-2">
+                            <button class="btn btn-primary iniciar-btn" ${fase.completada ? "disabled" : ""}>
+                                ${fase.completada ? "Completada" : "Iniciar"}
+                            </button>
+                            ${
+                                fase.completada
+                                    ? `<button class="btn btn-warning reiniciar-btn">Reiniciar</button>`
+                                    : ""
+                            }
+                        </div>
                     </div>
                 </div>
             `;
 
-            // Agregar comportamiento del botón “Iniciar”
-            const boton = card.querySelector("button");
-            boton.addEventListener("click", () => {
+            const botonIniciar = card.querySelector(".iniciar-btn");
+            botonIniciar.addEventListener("click", () => {
                 if (!fase.completada) {
-                    // redirige a la página de la fase (por ejemplo, fase1.html, fase2.html, etc.)
                     window.location.href = `/fase${fase.id}.html`;
                 }
             });
+
+            // Agregar comportamiento del botón “Reiniciar”
+            const botonReiniciar = card.querySelector(".reiniciar-btn");
+            if (botonReiniciar) {
+                botonReiniciar.addEventListener("click", async () => {
+                    if (confirm(`¿Quieres reiniciar la fase "${fase.nombre}"?`)) {
+                        try {
+                            const resp = await fetch("http://localhost:4000/api/reiniciar-fase", {
+                                method: "POST",
+                                headers: {
+                                    "Content-Type": "application/json"
+                                },
+                                body: JSON.stringify({ faseId: fase.id })
+                            });
+                            const data = await resp.json();
+                            if (data.status === "OK") {
+                                alert("La fase se reinició correctamente.");
+                                location.reload();
+                            } else {
+                                alert("Error al reiniciar la fase.");
+                            }
+                        } catch (error) {
+                            console.error("Error al reiniciar fase:", error);
+                            alert("Error en el servidor.");
+                        }
+                    }
+                });
+            }
 
             contenedor.appendChild(card);
         });

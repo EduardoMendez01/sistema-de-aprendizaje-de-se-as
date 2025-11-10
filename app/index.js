@@ -49,9 +49,12 @@ app.post("/api/registrar", authentication.registrar);
 app.get("/api/fases", authentication.verificarToken, authentication.obtenerProgreso);
 app.post("/api/guardar-progreso", authentication.verificarToken, authentication.guardarProgreso);
 app.get("/api/perfil", authentication.verificarToken, authentication.verPerfil);
+app.post("/api/reiniciar-fase", authentication.verificarToken, authentication.reiniciarFase);
 
 //encuestas 
 app.get("/encuesta_fase1.html", authentication.verificarToken, (req, res) => res.sendFile(path.join(__dirname, "pages", "encuesta_fase1.html")));
+app.get("/encuesta_fase2.html", authentication.verificarToken, (req, res) => res.sendFile(path.join(__dirname, "pages", "encuesta_fase2.html")));
+app.get("/encuesta_fase3.html", authentication.verificarToken, (req, res) => res.sendFile(path.join(__dirname, "pages", "encuesta_fase3.html")));
 
 
 // Iniciar servidor

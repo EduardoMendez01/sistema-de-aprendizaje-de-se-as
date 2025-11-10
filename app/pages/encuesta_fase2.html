@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Encuesta Fase 1 - Abecedario</title>
+    <title>Encuesta Fase 2 - comidas</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="fase1.css" />
 
@@ -120,30 +120,56 @@
     </nav>
 
     <div class="contenedor">
-        <h2>Encuesta: Fase 1 - Abecedario</h2>
+        <h2>Encuesta: Fase 2 - Comidas</h2>
         <p>Responde las siguientes preguntas para evaluar lo aprendido:</p>
 
         <form id="formEncuesta">
             <div class="mb-4">
-                <label><strong>1. ¿Qué letra se representa con la mano cerrada y el pulgar
-                        extendido?</strong></label><br>
-                <input type="radio" name="preg1" value="A"> A<br>
-                <input type="radio" name="preg1" value="B"> B<br>
-                <input type="radio" name="preg1" value="C"> C<br>
+                <label><strong>1. ¿Qué comida se representa haciendo una "A" con ambas manos y moviéndolas alternadas
+                        subiendo y rotando la muñeca hacia abajo?</strong></label><br>
+                <input type="radio" name="preg1" value="ATOLE"> ATOLE<br>
+                <input type="radio" name="preg1" value="AZÚCAR"> AZÚCAR<br>
+                <input type="radio" name="preg1" value="CALDO"> CALDO<br>
             </div>
 
             <div class="mb-4">
-                <label><strong>2. ¿Qué letra se forma doblando todos los dedos?</strong></label><br>
-                <input type="radio" name="preg2" value="E"> E<br>
-                <input type="radio" name="preg2" value="D"> D<br>
-                <input type="radio" name="preg2" value="B"> B<br>
+                <label><strong>2. ¿Qué seña se hace colocando una "A" en la boca, tocándola con el
+                        pulgar?</strong></label><br>
+                <input type="radio" name="preg2" value="AVENA"> AVENA<br>
+                <input type="radio" name="preg2" value="CAFÉ"> CAFÉ<br>
+                <input type="radio" name="preg2" value="BACARDÍ"> BACARDÍ<br>
             </div>
 
             <div class="mb-4">
-                <label><strong>3. ¿Qué letra tiene los dedos unidos en posición cóncava?</strong></label><br>
-                <input type="radio" name="preg3" value="C"> C<br>
-                <input type="radio" name="preg3" value="F"> F<br>
-                <input type="radio" name="preg3" value="A"> A<br>
+                <label><strong>3. ¿Qué palabra se representa haciendo una "A" sobre la boca con la palma hacia usted y
+                        bajando ligeramente?</strong></label><br>
+                <input type="radio" name="preg3" value="AZÚCAR"> AZÚCAR<br>
+                <input type="radio" name="preg3" value="CALDO"> CALDO<br>
+                <input type="radio" name="preg3" value="ATOLE"> ATOLE<br>
+            </div>
+
+            <div class="mb-4">
+                <label><strong>4. ¿Cuál seña se hace con los dedos índice, medio y pulgar en forma de garra tocando un
+                        lado del cuello?</strong></label><br>
+                <input type="radio" name="preg4" value="BACARDÍ"> BACARDÍ<br>
+                <input type="radio" name="preg4" value="CAFÉ"> CAFÉ<br>
+                <input type="radio" name="preg4" value="AVENA"> AVENA<br>
+            </div>
+
+            <div class="mb-4">
+                <label><strong>5. ¿Qué palabra se representa haciendo una "C" que se coloca sobre el puño con un
+                        movimiento circular?</strong></label><br>
+                <input type="radio" name="preg5" value="CAFÉ"> CAFÉ<br>
+                <input type="radio" name="preg5" value="CALDO"> CALDO<br>
+                <input type="radio" name="preg5" value="AZÚCAR"> AZÚCAR<br>
+            </div>
+
+            <div class="mb-4">
+                <label><strong>6. ¿Qué seña se hace formando una "C" con los dedos separados y tocando el dorso del
+                        puño?</strong></label><br>
+                <input type="radio" name="preg6" value="CALDO"> CALDO<br>
+                <input type="radio" name="preg6" value="ATOLE"> ATOLE<br>
+                <input type="radio" name="preg6" value="CAFÉ"> CAFÉ<br>
             </div>
 
             <button type="submit">Enviar respuestas</button>
@@ -157,13 +183,17 @@
             e.preventDefault();
 
             const respuestasCorrectas = {
-                preg1: "A",
-                preg2: "E",
-                preg3: "C"
+                preg1: "ATOLE",
+                preg2: "AVENA",
+                preg3: "AZÚCAR",
+                preg4: "BACARDÍ",
+                preg5: "CAFÉ",
+                preg6: "CALDO"
             };
 
+
             let puntos = 0;
-            let total = 3;
+            let total = 6;
 
             for (let key in respuestasCorrectas) {
                 const seleccionada = document.querySelector(`input[name="${key}"]:checked`);
@@ -188,7 +218,7 @@
             }
 
             this.querySelectorAll("input, button").forEach(el => el.disabled = true);
-                enviarResultado(porcentaje);
+            enviarResultado(porcentaje);
 
         });
 
@@ -199,7 +229,7 @@
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    faseId: 1, 
+                    faseId: 2,
                     resultado: resultado
                 })
             })
@@ -212,7 +242,7 @@
                             icon: "success",
                             confirmButtonText: "Continuar"
                         }).then(() => {
-                            window.location.href = "/encuesta_fase1.html"; 
+                            window.location.href = "/encuesta_fase2.html";
                         });
                     } else {
                         Swal.fire("Error", "No se pudo guardar tu progreso", "error");

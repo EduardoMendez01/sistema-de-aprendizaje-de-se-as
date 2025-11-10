@@ -114,8 +114,52 @@ async function obtenerProgreso(req, res) {
         res.status(500).json({ message: "Error al cargar fases" });
     }
 }
-
 async function guardarProgreso(req, res) {
+    try {
+        const usuarioId = req.user.id;
+        const { faseId, resultado } = req.body;
+
+        if (!faseId || resultado === undefined) {
+            return res.status(400).json({ status: "Error", message: "Datos incompletos" });
+        }
+
+        const [rows] = await connection.query(
+            "SELECT * FROM progreso_usuarios WHERE usuario_id = ? AND fase_id = ?",
+            [usuarioId, faseId]
+        );
+
+        // Determinar si aprobó la fase
+        const completada = resultado >= 60 ? 1 : 0;
+
+        if (rows.length > 0) {
+            const progresoPrevio = rows[0];
+
+            // Si ya estaba completada, no se debe marcar como pendiente
+            const nuevaCompletada = progresoPrevio.completada === 1 ? 1 : completada;
+
+            // Si el nuevo resultado es mayor, se actualiza; si es menor, se conserva el anterior
+            const nuevoResultado = resultado > progresoPrevio.resultado ? resultado : progresoPrevio.resultado;
+
+            await connection.query(
+                "UPDATE progreso_usuarios SET completada = ?, resultado = ? WHERE usuario_id = ? AND fase_id = ?",
+                [nuevaCompletada, nuevoResultado, usuarioId, faseId]
+            );
+        } else {
+            // Si es la primera vez que hace la fase
+            await connection.query(
+                "INSERT INTO progreso_usuarios (usuario_id, fase_id, completada, resultado) VALUES (?, ?, ?, ?)",
+                [usuarioId, faseId, completada, resultado]
+            );
+        }
+
+        res.json({ status: "OK", message: "Progreso guardado correctamente" });
+    } catch (error) {
+        console.error("Error al guardar progreso:", error);
+        res.status(500).json({ status: "Error", message: "Error en el servidor" });
+    }
+}
+
+/*async function guardarProgreso(req, res) {
     try {
         const usuarioId = req.user.id;
         const { faseId, resultado } = req.body;
@@ -149,7 +193,7 @@ async function guardarProgreso(req, res) {
         console.error("Error al guardar progreso:", error);
         res.status(500).json({ status: "Error", message: "Error en el servidor" });
     }
-}
+}*/
 
 async function verPerfil(req, res) {
     try {
@@ -190,12 +234,35 @@ async function verPerfil(req, res) {
     }
 }
 
+async function reiniciarFase(req, res) {
+    try {
+        const usuarioId = req.user.id;
+        const { faseId } = req.body;
+
+        if (!faseId) {
+            return res.status(400).json({ status: "Error", message: "Fase no especificada" });
+        }
+
+        await connection.query(
+            "DELETE FROM progreso_usuarios WHERE usuario_id = ? AND fase_id = ?",
+            [usuarioId, faseId]
+        );
+
+        res.json({ status: "OK", message: "Fase reiniciada correctamente" });
+    } catch (error) {
+        console.error("Error al reiniciar fase:", error);
+        res.status(500).json({ status: "Error", message: "Error en el servidor" });
+    }
+}
+
+
 export const method = {
     login,
     registrar,
     verificarToken,
     obtenerProgreso,
     guardarProgreso,
-    verPerfil
+    verPerfil,
+    reiniciarFase
 };
 
